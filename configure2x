@@ -1,0 +1,9 @@
+#!/bin/bash
+
+. `dirname "$0"`/common || exit 1
+
+export CC="$COMPILER_PREFIX/bin/$TARGET-gcc"
+export CXX="$COMPILER_PREFIX/bin/$TARGET-g++"
+#export GCC_EXEC_PREFIX="$TARGET"
+export PKG_CONFIG_PATH="$COMPILER_PREFIX/lib/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
+./configure --target=$TARGET --host=$TARGET --build=$BUILD --prefix="$PREFIX" $@

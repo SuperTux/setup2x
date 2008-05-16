@@ -1,0 +1,42 @@
+#!/bin/bash
+
+function execute() {
+	echo "$@"
+	"$@" || exit $?
+}
+
+function download() {
+	URL="$1"
+	TO="$2"
+	if [ -e "$TO" ]; then
+		echo "found $TO"
+	else
+		execute wget "$URL" -O "$TO"
+	fi
+}
+
+ME="`readlink -f $0`"
+BASEDIR="`dirname "$ME"`"
+DOWNLOAD_DIR="$BASEDIR/download"
+mkdir -p "$DOWNLOAD_DIR"
+if [ ! -e "$DOWNLOAD_DIR" ]; then
+	echo "Couldn't create $DOWNLOAD_DIR"
+fi
+
+# 2x configuration
+PREFIX="/opt/open2x"
+COMPILER_PREFIX="$PREFIX/gcc-4.1.1-glibc-2.3.6"
+TARGET=arm-open2x-linux
+BUILD="`$BASEDIR/config.guess`"
+PATH="$COMPILER_PREFIX/$TARGET/bin:$PATH:$COMPILER_PREFIX/bin"
+export PATH
+
+# can we write to $PREFIX
+TESTFILE="$PREFIX/icanwrite"
+if ! touch "$TESTFILE"; then
+	echo "Please make sure /etc/open2x exists and is writable"
+	exit 1
+fi
+rm -f "$TESTFILE"
+
+
