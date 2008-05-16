@@ -14,7 +14,7 @@ PHYSFS_FILE="$DOWNLOAD_DIR/physfs-$PHYSFS_VERSION.tar.gz"
 download "http://icculus.org/physfs/downloads/physfs-$PHYSFS_VERSION.tar.gz" "$PHYSFS_FILE"
 execute tar -xf "$PHYSFS_FILE"
 execute pushd physfs-"$PHYSFS_VERSION"
-execute "$BASEDIR/configure2x" --prefix=/opt/open2x
+execute "$BASEDIR/configure2x" --prefix="$PREFIX"
 execute make
 execute make install
 execute popd
