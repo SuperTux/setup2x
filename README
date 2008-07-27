@@ -4,4 +4,10 @@ development toolchain for the gp2x.
 Make sure that /opt/open2x exists and is writable and execute ./setup.sh
 
 supertux should be located in ../supertux (relative to this README file). You
-can then setup supertux with ./supertux.sh
+can then setup supertux with ./supertux.sh.
+
+Warning: cmake only creates Makefiles outside the supertux source directory if
+there aren't already Makefiles in the supertux directory. If you already have
+Makefiles in the supertux dir, delete the CMakeFiles directory and *.cmake
+(except config.h.cmake).  (Matze: Is there a cmake or make command to automate
+this like "make cvsclean" in automake did?)
