@@ -3,3 +3,5 @@ development toolchain for the gp2x.
 
 Make sure that /opt/open2x exists and is writable and execute ./setup.sh
 
+supertux should be located in ../supertux (relative to this README file). You
+can then setup supertux with ./supertux.sh
