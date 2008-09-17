@@ -2,20 +2,22 @@
 
 . `dirname "$0"`/common || exit 1
 
-PKG="openal"
+PKG="vorbis"
 MARKER="$BASEDIR/.${PKG}_is_built"
 if [ -e "$MARKER" ]; then
 	echo "$PKG seems to be already build, remove $MARKER to rebuild"
 	exit 0
 fi
 
-OPENAL_DIR="openal-svn"
-CONFIGURE_FLAGS="--prefix=$PREFIX --enable-null --enable-sdl --disable-vorbis --disable-mp3 --disable-smpeg --disable-alsa --disable-oss"
+VORBIS_DIR="libvorbis-1.2.0"
+VORBIS_FILE="$VORBIS_DIR.tar.gz"
+CONFIGURE_FLAGS="--disable-oggtest"
 CFLAGS="-D_GNU_SOURCE"
 export CFLAGS
-#execute svn co http://connect.creativelabs.com/OpenAL/trunk/OpenAL-Sample/ "$OPENAL_DIR"
-execute pushd "$OPENAL_DIR"
-execute "./autogen.sh"
+download "http://downloads.xiph.org/releases/vorbis/libvorbis-1.2.0.tar.gz" "download/$VORBIS_FILE"
+execute tar -xf "download/$VORBIS_FILE"
+execute pushd "$VORBIS_DIR"
+#execute "./autogen.sh"
 execute "$BASEDIR/configure2x" $CONFIGURE_FLAGS
 execute make
 execute make install

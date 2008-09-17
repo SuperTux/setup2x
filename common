@@ -24,9 +24,9 @@ if [ ! -e "$DOWNLOAD_DIR" ]; then
 fi
 
 # 2x configuration
-PREFIX="/opt/open2x"
-COMPILER_PREFIX="$PREFIX/gcc-4.1.1-glibc-2.3.6"
-TARGET=arm-open2x-linux
+PREFIX="/aesop/cross"
+COMPILER_PREFIX="$PREFIX/gcc-4.0.2-glibc-2.3.6/arm-linux"
+TARGET=arm-linux
 BUILD="`$BASEDIR/config.guess`"
 PATH="$COMPILER_PREFIX/$TARGET/bin:$PATH:$COMPILER_PREFIX/bin"
 export PATH
