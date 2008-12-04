@@ -24,19 +24,21 @@ if [ ! -e "$DOWNLOAD_DIR" ]; then
 fi
 
 # 2x configuration
-PREFIX="/aesop/cross"
-COMPILER_PREFIX="$PREFIX/gcc-4.0.2-glibc-2.3.6/arm-linux"
-TARGET=arm-linux
+PREFIX="/opt/open2x"  # note: do not change this, it's hardcoded in some of the toolchain applications
+COMPILER_PREFIX="$PREFIX/gcc-4.1.1-glibc-2.3.6"
+TARGET=arm-open2x-linux
 BUILD="`$BASEDIR/config.guess`"
 PATH="$COMPILER_PREFIX/$TARGET/bin:$PATH:$COMPILER_PREFIX/bin"
 export PATH
+PKG_CONFIG_PATH="$PREFIX/lib/pkg-config:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH
 
 # can we write to $PREFIX
+mkdir -p "$PREFIX"
 TESTFILE="$PREFIX/icanwrite"
 if ! touch "$TESTFILE"; then
-	echo "Please make sure /etc/open2x exists and is writable"
+	echo "Please make sure '$PREFIX' exists and is writable"
 	exit 1
 fi
 rm -f "$TESTFILE"
-
 

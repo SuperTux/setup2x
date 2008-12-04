@@ -2,6 +2,12 @@
 
 . `dirname "$0"`/common || exit 1
 
+PKG="openal-soft"
+MARKER="$BASEDIR/.${PKG}_is_built"
+if [ -e "$MARKER" ]; then
+	echo "$PKG seems to be already build, remove $MARKER to rebuild"
+	exit 0
+fi
 
 export CC="$COMPILER_PREFIX/bin/$TARGET-gcc"
 export CXX="$COMPILER_PREFIX/bin/$TARGET-g++"
@@ -16,24 +22,21 @@ LIBL2X="$COMPILER_PREFIX/../usr/lib"
 CMAKE_FLAGS=""
 CMAKE_FLAGS="$CMAKE_FLAGS -DGENERATE_MESSAGESPOT=off"
 CMAKE_FLAGS="$CMAKE_FLAGS -DGENERATE_WRAPPER=off"
-CMAKE_FLAGS="$CMAKE_FLAGS -DVORBISENC_LIBRARY=$LIBL2X/libvorbisenc.so"
-CMAKE_FLAGS="$CMAKE_FLAGS -DVORBISFILE_LIBRARY=$LIBL2X/libvorbisfile.so"
-CMAKE_FLAGS="$CMAKE_FLAGS -DVORBIS_LIBRARY=$LIBL2X/libvorbis.so"
-CMAKE_FLAGS="$CMAKE_FLAGS -DVORBIS_INCLUDE_DIR=$INCLUDEL2X"
 CMAKE_FLAGS="$CMAKE_FLAGS -DCMAKE_CXX_COMPILER=$CXX"
 CMAKE_FLAGS="$CMAKE_FLAGS -DCMAKE_C_COMPILER=$CC"
-CMAKE_FLAGS="$CMAKE_FLAGS -DVORBIS_INCLUDE_DIR=$INCLUDEL2X"
 CFLAGS="-I$INCLUDEL2X -I$INCLUDEL2X"
 CMAKE_FLAGS="$CMAKE_FLAGS -DCMAKE_CXX_FLAGS=$CFLAGS"
 CMAKE_FLAGS="$CMAKE_FLAGS -DCMAKE_C_FLAGS=$CFLAGS"
 CMAKE_FLAGS="$CMAKE_FLAGS -DCMAKE_INSTALL_PREFIX=$PREFIX"
+CMAKE_FLAGS="$CMAKE_FLAGS -DHAVE_FESETROUND=0"
 CMAKE_FLAGS="$CMAKE_FLAGS --enable-null --enable-sdl --disable-vorbis --disable-mp3 --disable-smpeg --disable-alsa --disable-oss"
 
-AL_VERSION="1.5.304"
+AL_VERSION="1.6.372"
 AL_FILE="$DOWNLOAD_DIR/openal-soft-$AL_VERSION.tar.bz2"
-download "http://connect.creativelabs.com/openal/Downloads/openal-soft-1.5.304.tar.bz2" "$AL_FILE"
-execute pushd openal-soft-1.5.304
+download "http://kcat.strangesoft.net/openal-releases/openal-soft-$AL_VERSION.tar.bz2" "$AL_FILE"
+execute tar -xf "$AL_FILE"
+execute pushd "openal-soft-$AL_VERSION"
 execute cmake $CMAKE_FLAGS .
 execute make -j 2
 execute make install
-execute popd openal-soft-1.5.304
+execute popd "openal-soft-$AL_VERSION"

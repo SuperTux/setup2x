@@ -2,10 +2,10 @@
 
 . common
 
-#$BASEDIR/toolchain.sh
-#$BASEDIR/libpack.sh
+$BASEDIR/toolchain.sh
+$BASEDIR/libpack.sh
 $BASEDIR/curl.sh
 $BASEDIR/physfs.sh
-$BASEDIR/openal-new.sh
+$BASEDIR/openal-soft.sh
 $BASEDIR/ogg.sh
 $BASEDIR/vorbis.sh

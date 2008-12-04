@@ -11,7 +11,6 @@ fi
 
 VORBIS_DIR="libvorbis-1.2.0"
 VORBIS_FILE="$VORBIS_DIR.tar.gz"
-CONFIGURE_FLAGS="--disable-oggtest"
 CFLAGS="-D_GNU_SOURCE"
 export CFLAGS
 download "http://downloads.xiph.org/releases/vorbis/libvorbis-1.2.0.tar.gz" "download/$VORBIS_FILE"
